@@ -1,0 +1,41 @@
+variables:
+  PROJECT_VERSION: "1.2"
+  PROJECT_NAME: "BCEF-JAVALAB"
+  PROJECT_IMAGE_NAME: ""
+  PROJECT_BLOCK_ON_SECURITY_ISSUES: "false"
+  PROJECT_LANGUAGES: "JAVA"
+  PROJECT_BUILD_IMAGE: "maven"
+  PROJECT_BUILD_SCRIPT: "mvn clean install -DskipTests"
+  PROJECT_BUILD_LIBS: "./target"
+  PROJECT_BUILD_ARTIFACTS: ""
+  FORTIFY_SSC_URL: "https://ssc.kube.agile4security.io/"
+  FORTIFY_ATTRIBUTES: ""
+  FORTIFY_ISSUE_TEMPLATE: ""
+  SAST_FORTIFY_ENABLE: "true"
+  SAST_FORTIFY_EXCLUDES: ""
+  SAST_FORTIFY_JVM_OPTIONS: ""
+  SAST_FORTIFY_TOUCHLESS_COMMAND: "mvn clean install -DskipTests"
+  SAST_FORTIFY_HLA: ""
+  SAST_FORTIFY_JAVA_VERSION: ""
+  SAST_FORTIFY_PHP_VERSION: ""
+  SAST_FORTIFY_PYTHON_VERSION: ""
+  SAST_FORTIFY_PASS_FAIL_POLICY: ""
+  # full, partial or no
+  SAST_FORTIFY_SCANCENTRAL_ENABLE: "full"
+  SAST_FORTIFY_SCANCENTRAL_CONTROLLER_URL: "https://scctrl.kube.agile4security.io/scancentral-ctrl/"
+  SAST_FORTIFY_SCANCENTRAL_BUILD_TOOL: "mvn clean install -DskipTests"
+  SAST_FORTIFY_SCANCENTRAL_BUILD_FILE: "pom.xml"
+  SAST_FORTIFY_SCANCENTRAL_WAIT_FOR_SCAN_COMPLETE: "true"
+  # Linux: 7bbe4042-aea4-4bf3-9997-c65dca44c1bb & Windows: 57fa452d-ca68-4609-a40c-6975af256f7d
+  SAST_FORTIFY_SCANCENTRAL_POOL: ""
+
+
+# tags all for all available runners otherwise use the specific runner tag 
+.general-tags:
+  tags:
+    - all
+
+include:
+  - project: "secdojo/secgates-gitlab-ci-scripts"
+    ref: master
+    file: ".gitlab-ci-base.yml"

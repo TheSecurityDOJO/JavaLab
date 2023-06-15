@@ -1,4 +1,4 @@
-package com.laba4s;
+package com.example.demo2;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FilesStorageServiceImpl implements FilesStorageService {
 
   private final Path root = Paths.get("/opt/app/static/validated");
-  private final Path rootTmp = Paths.get("/opt/app/tmp");
+  private final Path rootTmp = Paths.get("/opt/app/tmp/");
 
   @Override
   public void init() {
@@ -31,10 +31,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
   @Override
   public void save(MultipartFile file) throws Exception{
-	  String canonical = ((this.rootTmp.resolve(file.getOriginalFilename())).toFile()).getCanonicalPath();
-	  if(canonical.startsWith(this.rootTmp.toString())) {
-		  Files.copy(file.getInputStream(), this.rootTmp.resolve(file.getOriginalFilename()));
-	  }
+      Files.copy(file.getInputStream(), this.rootTmp.resolve(file.getOriginalFilename()));
   }
   
   @Override

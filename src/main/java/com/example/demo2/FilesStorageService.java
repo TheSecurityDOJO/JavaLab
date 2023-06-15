@@ -1,4 +1,4 @@
-package com.laba4s;
+package com.example.demo2;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;

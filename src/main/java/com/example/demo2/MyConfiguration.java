@@ -1,4 +1,4 @@
-package com.laba4s;
+package com.example.demo2;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ public class MyConfiguration {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		config.addAllowedOrigin("https://fakedeals.ctfdemo.agile4security.io");
+		config.addAllowedOrigin("*");
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
