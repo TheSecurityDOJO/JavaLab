@@ -25,12 +25,13 @@ jobs:
         run: scancentral -url ${SC_CONTROLLER_URL} start $BUILD_OPTS -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN
         env:                                            
           SC_CONTROLLER_URL: ${{ secrets.SC_CONTROLLER_URL }}
-          SSC_UPLOAD_TOKEN: ${{ secrets.SSC_UPLOAD_TOKEN }}
-          APPLICATION: "OPENWEATHER"
+          SSC_UPLOAD_TOKEN: ${{ secrets.SSC_AUTHTOKEN_DECODED }}
+          APPLICATION: "DEMO-JAVALAB"
           VERSION: "1.0"
           BUILD_OPTS: "-bt mvn"
   export:
     runs-on: ubuntu-latest
+    needs: Fortify-SAST
     steps:
     - uses: fortify/gha-export-vulnerabilities@v1.0.0
       with:
