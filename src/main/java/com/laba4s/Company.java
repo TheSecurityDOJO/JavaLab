@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.laba4s;
 
 public class Company {
 	private String siret;

@@ -1,12 +1,10 @@
-package com.example.demo2;
-
+package com.laba4s;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 public class Contact {
 
-	
 	private String email;
 	private String content;
 
@@ -48,12 +46,4 @@ public class Contact {
 		super();
 	}
 
-	
-
-	
-	
-	
-	
-	
-	
 }

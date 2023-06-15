@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.laba4s;
 
 
 import javax.persistence.Column;
@@ -6,12 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 
 
 
 @Entity
+@Table(name="deal")
 public class Deal {
     
     @Id
@@ -32,18 +34,24 @@ public class Deal {
     @Column(name = "validated")
     private String validated;
     
+    @Column(name = "session")
+    private String session;
+    
     public Deal() {
     	
     }
 
 	public Deal(@NotBlank(message = "description is mandatory") String description,
-			@NotBlank(message = "link is mandatory") String link, String name, String validated) {
+			@NotBlank(message = "link is mandatory") String link, String name, String validated, String session) {
 		super();
 		this.description = description;
 		this.link = link;
 		this.name = name;
 		this.validated = validated;
+		this.session = session;
 	}
+	
+
 
 	public Long getId() {
 		return id;
@@ -85,9 +93,12 @@ public class Deal {
 		this.validated = validated;
 	}
 
-		
+	public String getSession() {
+		return session;
+	}
 
+	public void setSession(String session) {
+		this.session = session;
+	}
 
- 
-    
 }

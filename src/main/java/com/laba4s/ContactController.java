@@ -1,7 +1,8 @@
-package com.example.demo2;
+package com.laba4s;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class ContactController {
 	
-	@PostMapping("/contact")
+	@PostMapping("/api/contact")
 	public ResponseEntity<String> Contact(@RequestBody String inputContact) throws IOException {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -24,7 +25,7 @@ public class ContactController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}catch(Exception e) {
 			System.out.println(e);
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>(ExceptionUtils.getStackTrace(e),HttpStatus.resolve(500));
 		}
 		
 	}
