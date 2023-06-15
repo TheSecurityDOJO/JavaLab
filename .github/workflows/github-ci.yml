@@ -1,0 +1,54 @@
+name: Fortify SSC Export
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Fortify-SAST:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Download Fortify ScanCentral Client
+        uses: fortify/gha-setup-scancentral-client@v1   
+        with:
+          version: 22.2.0             
+          client-auth-token: ${{ secrets.SSC_AUTHTOKEN_DECODED }}
+      - name: Perform SAST Scan
+        run: scancentral -url ${SC_CONTROLLER_URL} start $BUILD_OPTS -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN
+        env:                                            
+          SC_CONTROLLER_URL: ${{ secrets.SC_CONTROLLER_URL }}
+          SSC_UPLOAD_TOKEN: ${{ secrets.SSC_UPLOAD_TOKEN }}
+          APPLICATION: "My Application"
+          VERSION: "1.0"
+          BUILD_OPTS: "-bt mvn"
+  export:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: fortify/gha-export-vulnerabilities@v1.0.0
+      with:
+        # SSC Base URL (e.g. https://my.ssc.host/ssc)
+        ssc_base_url: ${{ secrets.SSC_BASE_URL }}
+        # SSC CI authentication token
+        ssc_auth_token: ${{ secrets.SSC_AUTHTOKEN_DECODED }}
+        # SSC <application name>:<version name> from which to download SAST vulnerabilities
+        ssc_version_name: ${{ secrets.SSC_VERSION_NAME }}
+        # SSC filter set id from which to download SAST vulnerabilities
+        # ssc_vuln_filter_set_id: # optional
+        # The system/format to export to, used to determine the FortifyVulnerabilityExporter configuration file to use
+        export_target: GitHub
+        # Directory where output files will be stored, defaults to GitHub workspace directory
+        export_dir: ${GITHUB_WORKSPACE}
+    # Import Fortify SAST results to GitHub Security Code Scanning
+    - name: Import Results
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ./gh-fortify-sast.sarif
+
