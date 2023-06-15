@@ -1,9 +1,6 @@
 package com.example.demo2;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,21 +15,20 @@ import javax.validation.constraints.NotBlank;
 public class Deal {
     
     @Id
-	@JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	@JsonInclude
+        
     @NotBlank(message = "description is mandatory")
     @Column(name = "description")
     private String description;
-	@JsonInclude
+    
     @NotBlank(message = "link is mandatory")
     @Column(name = "link")
     private String link;
-    @JsonInclude
+    
     @Column(name = "name")
     private String name;
-	@JsonIgnore
+    
     @Column(name = "validated")
     private String validated;
     
@@ -90,6 +86,8 @@ public class Deal {
 	}
 
 		
+
+
  
     
 }
