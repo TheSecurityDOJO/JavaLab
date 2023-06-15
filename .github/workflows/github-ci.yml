@@ -22,7 +22,7 @@ jobs:
           version: 22.2.0             
           client-auth-token: ${{ secrets.CLIENT_AUTH_TOKEN }}
       - name: Perform SAST Scan
-        run: scancentral -url ${SC_CONTROLLER_URL} start -bt mvn -bc "clean install" -bf pom.xml -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN -block
+        run: scancentral -url ${SC_CONTROLLER_URL} start -bt mvn -bc "clean install -DskipTests" -bf pom.xml -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN -block
         env:                                            
           SC_CONTROLLER_URL: ${{ secrets.SC_CONTROLLER_URL }}
           SSC_UPLOAD_TOKEN: ${{ secrets.SSC_AUTHTOKEN_DECODED }}
