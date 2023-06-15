@@ -1,4 +1,4 @@
-name: Fortify SSC Export
+name: Fortify SSC
 
 on:
   push:
@@ -22,14 +22,14 @@ jobs:
           version: 22.2.0             
           client-auth-token: ${{ secrets.CLIENT_AUTH_TOKEN }}
       - name: Perform SAST Scan
-        run: scancentral -url ${SC_CONTROLLER_URL} start $BUILD_OPTS -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN -block
+        run: scancentral -url ${SC_CONTROLLER_URL} start -bt mvn -bc "clean install" -bf pom.xml -upload -application $APPLICATION -version $VERSION -uptoken $SSC_UPLOAD_TOKEN -block
         env:                                            
           SC_CONTROLLER_URL: ${{ secrets.SC_CONTROLLER_URL }}
           SSC_UPLOAD_TOKEN: ${{ secrets.SSC_AUTHTOKEN_DECODED }}
           APPLICATION: "DEMO-JAVALAB"
           VERSION: "1.0"
           BUILD_OPTS: "-bt mvn -bc 'clean install' -bf pom.xml"
-  export:
+  Fortify-Export:
     runs-on: ubuntu-latest
     needs: Fortify-SAST
     steps:
